@@ -1,0 +1,53 @@
+body{
+	background-color: #FFFFFF;
+}
+
+p{
+	margin-bottom: 0;
+}
+
+.banner{
+	
+}
+
+.banner img{
+	width: 46%;
+	margin-left: 27%;
+	margin-right: 27%;
+	margin-top: 45px;
+	display: block;
+}
+
+.mainContent{
+	margin-top: 30px;
+}
+
+.mainContent .title{
+	line-height: 30px;
+	font-size: 18px;
+	color: #2577FF;
+	text-align: center;
+}
+
+.mainContent .desc{
+	line-height: 30px;
+	font-size: 14px;
+	color: #666666;
+	text-align: center;
+}
+
+.mainContent .goBack{
+	background: -webkit-linear-gradient(left, #00B6F7 0%, #008FFF 100%);
+	height: 40px;
+	margin: 25px 15px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.mainContent .goBack p{
+	line-height: 40px;
+	font-size: 14px;
+	color: #FFFFFF;
+	text-align: center;
+}

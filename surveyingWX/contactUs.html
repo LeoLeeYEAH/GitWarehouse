@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
+		<title>联系我们</title>
+		<!--jQuery框架-->
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--MUI框架-->
+		<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--CSS-->
+		<link rel="stylesheet" type="text/css" href="css/contactUs.css"/>
+		<!--JS-->
+	</head>
+	
+	<body>
+		<div class="mainContent">
+			<!--回到首页按钮-->
+			<div class="backToHome">
+				<p><img src="img/backToHome.png"/>首页</p>
+			</div>
+			<!-- 信息介绍 -->
+			<ul class="mui-table-view">
+			    <li class="mui-table-view-cell">
+			    		<p id="organTitle">房产测绘中心</p>
+			    		<p id="organAddress">单位地址：武汉市江岸区高雄路166号<img src="img/navigate.png"/><span>导航</span></p>
+			    		<p id="organCode">邮政编码：430074</p>
+			    </li>
+			</ul>
+			<!--科室列表-->
+			<ul class="mui-table-view">
+			    <li class="mui-table-view-cell">
+			    		<a class="mui-navigate-right">测绘科</a>
+			    </li>
+			    <li class="mui-table-view-cell">
+			    		<a class="mui-navigate-right">制图科</a>
+			    </li>
+			    <li class="mui-table-view-cell">
+			    		<a class="mui-navigate-right">设备科</a>
+			    </li>
+			    <li class="mui-table-view-cell">
+			    		<a class="mui-navigate-right">技术科</a>
+			    </li>
+			    <li class="mui-table-view-cell">
+			    		<a class="mui-navigate-right">办公室</a>
+			    </li>
+			</ul>
+			<div class="blankDiv" style="height: 10px;"></div>
+			<!-- 科室详情弹出框 -->
+			<div class="detailPopout">
+				<img src="img/closeBtn.png" id="closeBtn"/>
+				<p class="detailPopoutTitle">测绘科</p>
+				<p class="detailPopoutDesc">科室介绍：承担新增房屋勘测定界测量、房产测绘（初始、变更）、商品房面积预测算等工作。</p>
+				<p class="detailPopoutDetail">联系电话：<a href="tel:027-85786666">027-85786666</a></p>
+				<p class="detailPopoutDetail">楼层：20楼</p>
+				<p class="detailPopoutDetail">传真：027-85786666</p>
+				<p class="detailPopoutDetail">邮箱：chzxchk@whfgj.com</p>
+				<div class="blankDiv" style="height: 20px;"></div>
+			</div>
+		</div>
+		<!--蒙版-->
+		<div class="mask"></div>
+		
+		<script type="text/javascript">
+		$(function(){
+			// 获取屏幕的长宽
+			var windowWidth = $(window).width();
+			var windowHeight = $(window).height();
+			// 将弹出框固定在一个合适的位置
+			var detailPopoutHeight = $('.detailPopout').height();
+			var detailPopoutTop = (windowHeight - detailPopoutHeight) * 0.5 * 0.6;
+			$('.detailPopout').css('top',detailPopoutTop + 'px');
+		});
+		
+		// 查看科室详情
+		$('.mui-navigate-right').click(function(){
+			// 禁止页面滚动
+			$('body').css('overflow','hidden');
+			// 蒙版弹出
+			$('.mask').fadeIn(500);
+			// 弹出框弹出
+			$('.detailPopout').fadeIn(500);
+		});
+		
+		// 关闭科室详情
+		$('#closeBtn').click(function(){
+			// 允许页面滚动
+			$('body').css('overflow','scroll');
+			// 蒙版消失
+			$('.mask').fadeOut(500);
+			// 弹出框消失
+			$('.detailPopout').fadeOut(500);
+		});
+		</script>
+	</body>
+</html>

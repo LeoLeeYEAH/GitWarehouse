@@ -1,0 +1,69 @@
+body{
+	
+}
+
+p{
+	margin-bottom: 0;
+}
+
+.mainContent{
+	background-color: #FFFFFF;
+}
+
+.mainContent .title{
+	margin-top: 10px;
+	width: 100%;
+	background-color: #FFFFFF;
+}
+
+.mainContent .title .titleText{
+	line-height: 35px;
+	font-size: 24px;
+	color: #333333;
+	padding: 10px 15px;
+}
+
+.mainContent .title .titleInfo{
+	line-height: 30px;
+	font-size: 17px;
+	color: #999999;
+	padding: 0px 15px;
+}
+
+.mainContent .divideLine{
+	height: 1px;
+	background-color: #CCCCCC;
+	margin: 10px 15px;
+}
+
+.mainContent .image{
+	background-color: #FFFFFF;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.mainContent .image img{
+	width: 100%;
+	margin-bottom: 10px;
+	display: block;
+}
+
+.mainContent .text{
+	width: 100%;
+	background-color: #FFFFFF;
+	margin-top: -10px;
+}
+
+.mainContent .text p{
+	line-height: 25px;
+	font-size: 17px;
+	color: #333333;
+	padding: 10px 15px;
+}
+
+.mainContent .text img{
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-bottom: 10px;
+	display: block;
+}

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
+		<title>公示公告</title>
+		<!--jQuery框架-->
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--MUI框架-->
+		<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--CSS-->
+		<link rel="stylesheet" type="text/css" href="css/newsList.css"/>
+		<!--JS-->
+		<script src="js/jQueryRotate.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	
+	<body>
+		<div class="mainContent">
+			<!--回到首页按钮-->
+			<div class="backToHome">
+				<p><img src="img/backToHome.png"/>首页</p>
+			</div>
+			<!--轮播新闻-->
+			<div class="topNews">
+				<div class="topNewsTitle">
+					<p>加快时空大数据与云平台建设力度 支撑城市规划建设管理和服务质量</p>
+				</div>
+				<!--MUI轮播开始-->
+				<div id="slider" class="mui-slider" >
+					<div class="mui-slider-group mui-slider-loop">
+						<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="#">
+								<img src="img/cbd.jpg">
+							</a>
+						</div>
+						<!-- 第一张 -->
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="img/shuijiao.jpg">
+							</a>
+						</div>
+						<!-- 第二张 -->
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="img/muwu.jpg">
+							</a>
+						</div>
+						<!-- 第三张 -->
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="img/cbd.jpg">
+							</a>
+						</div>
+						<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="#">
+								<img src="img/shuijiao.jpg">
+							</a>
+						</div>
+					</div>
+					<div class="mui-slider-indicator">
+						<div class="mui-indicator mui-active"></div>
+						<div class="mui-indicator"></div>
+						<div class="mui-indicator"></div>
+					</div>
+				</div>
+				<!--MUI轮播结束-->
+				<div class="topNewsDesc">
+					<p>近日，国家测绘地理信息局印发《关于加快推进智慧城市时空大数据与云平台建设试点工作的通知》和...</p>
+				</div>
+			</div>
+			<!--公示公告列表-->
+			<div id="newsList">
+			    <div class="newsCellWithImg">
+			    		<div class="tag">
+			    			<img src="img/latestNews.png"/>
+			    		</div>
+			    		<div class="info">
+			    			<p class="newsTitle">国家测绘地理信息局2017年第34号公告</p>
+			    			<p class="newsTime">2017-12-19</p>
+			    			<p class="newsDesc">为保障国务院“放管服”改革措施落实，根据《国务院办公厅...</p>
+			    		</div>
+			    		<div class="image">
+			    			<img src="img/exampleImg.jpg"/>
+			    		</div>
+			    </div>
+			    <div class="newsCellWithImg">
+			    		<div class="tag">
+			    			<img src="img/hotNews.png"/>
+			    		</div>
+			    		<div class="info">
+			    			<p class="newsTitle">加快时空大数据与云平台建设力度 支撑城市规划建设管理和服务质量</p>
+			    			<p class="newsTime">2017-12-19</p>
+			    			<p class="newsDesc">近日，国家测绘地理信息局印发《关于加快推进智慧城市时...</p>
+			    		</div>
+			    		<div class="image">
+			    			<img src="img/exampleImg.jpg"/>
+			    		</div>
+			    </div>
+			    <div class="newsCellWithoutImg">
+			    		<p class="newsTitle">国家测绘地理信息局2017年第34号公告</p>
+		    			<p class="newsTime">2017-12-19</p>
+		    			<p class="newsDesc">为保障国务院“放管服”改革措施落实，根据《国务院办公厅关于进一步做好“放管服”改革涉及的规章...</p>
+			    </div>
+			    <div class="newsCellWithoutImg">
+			    		<p class="newsTitle">加快时空大数据与云平台建设力度 支撑城市规划建设管理和服务质量</p>
+		    			<p class="newsTime">2017-12-19</p>
+		    			<p class="newsDesc">近日，国家测绘地理信息局印发《关于加快推进智慧城市时空大数据与云平台建设试点工作的通知》和...</p>
+			    </div>
+			</div>
+			<!--占位DIV-->
+			<div class="blankDiv" style="height: 30px;" id="noticeBlankDiv"></div>
+			<!--提示加载中DIV-->
+			<div class="notice" id="loading">
+				<p><img src="img/refresh.png" id="refreshIcon"/>请稍等，加载中...</p>
+			</div>
+			<!--无更多新闻DIV-->
+			<div class="notice" id="notAnymore">
+				<p><img src="img/smell.png" id="smell"/>您好，以上是全部公示公告</p>
+			</div>
+			<!--搜索按钮-->
+			<div class="searchIcon">
+				<img src="img/search.png"/>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+		/**********************************/
+		// 关于两行文字省略的建议
+		// 顶部轮播新闻预览建议截取文字数量：44
+		// 带图片的新闻栏预览建议截取截取文字数量：25
+		// 不带图片的新闻栏预览建议截取截取文字数量：44
+		/**********************************/
+		
+		// 定义屏幕宽高的全局变量
+		var windowWidth = 0;
+		var windowHeight = 0;
+		
+		// 页面加载即执行
+		$(function(){
+			// 获取屏幕的宽高
+			windowWidth = $(window).width();
+			windowHeight = $(window).height();
+			// 刷新图标开始旋转
+			var angle = 0;
+			setInterval(function(){
+				angle+=3;
+				$("#refreshIcon").rotate(angle);
+			},10);
+		});
+		
+		// 定义所有新闻是否加载完成的标识符
+		var allNewsLoaded = 0;
+		// 定义是否正在加载新列表项的标识符
+		var newsLoading = 0;
+		
+		// 监听屏幕滑动事件
+		$(window).scroll(function(){
+			// 获取列表总高度
+			var listHeight = $('#newsList').height();
+			// 屏幕滑动高度
+			var scrollTop = $(document).scrollTop();
+			// 滑动总高度
+			var totalHeight = parseInt(scrollTop + windowHeight);
+			// 内容总高度
+			var contentHeight = parseInt(listHeight + 330 + 30);
+//			console.log("totalHeight = "+totalHeight);
+//			console.log("contentHeight = "+contentHeight);
+			// 如果屏幕滑动高度+屏幕高度>列表总高度加上其他DIV高度&&新闻没有加载完毕
+			if ((totalHeight >= contentHeight) && allNewsLoaded == 0) {
+				// 当前是否有加载事件进行
+				if (newsLoading == 0) {
+					// 修改事件加载标识符，当前有其他加载事件进行中
+					newsLoading = 1;
+					// 屏幕滑动到底，可以进行上拉加载操作
+					console.log("屏幕滑动到底，准备进行上拉加载操作");
+					// 隐藏占位DIV，延迟500ms执行
+					setTimeout("$('#noticeBlankDiv').css('display','none')",500);
+					// 显示加载提示DIV，延迟500ms执行，总共需要1000ms加载
+					setTimeout("$('#loading').fadeIn(500);",500);
+					// 加载新的列表
+					setTimeout("addMoreNews();",1000);
+				} else {
+					// 当前有其他加载事件进行中，后台输出提示
+					console.log("当前有其他加载事件进行中");
+				}
+			}
+		});
+		
+		function addMoreNews(){
+			// 移除原本的占位DIV
+			$('#noticeBlankDiv').remove();
+			// 将新的列表拼接入原列表中
+			$('#newsList').append( // 带图片的列表栏
+				'<div class="newsCellWithImg">'+
+			    		'<div class="tag">'+
+			    			'<img src="img/hotNews.png"/>'+
+			    		'</div>'+
+			    		'<div class="info">'+
+			    			'<p class="newsTitle">加快时空大数据与云平台建设力度 支撑城市规划建设管理和服务质量</p>'+
+			    			'<p class="newsTime">2017-12-19</p>'+
+			    			'<p class="newsDesc">近日，国家测绘地理信息局印发《关于加快推进智慧城市时...</p>'+
+			    		'</div>'+
+			    		'<div class="image">'+
+			    			'<img src="img/exampleImg.jpg"/>'+
+			    		'</div>'+
+			   ' </div>'
+			);
+			$('#newsList').append( // 不带图片的列表栏
+				'<div class="newsCellWithoutImg">'+
+			    		'<p class="newsTitle">国家测绘地理信息局2017年第34号公告</p>'+
+		    			'<p class="newsTime">2017-12-19</p>'+
+		    			'<p class="newsDesc">为保障国务院“放管服”改革措施落实，根据《国务院办公厅关于进一步做好“放管服”改革涉及的规章...</p>'+
+			    '</div>'
+			);
+			// 隐藏提示DIV
+			$('#loading').css('display','none');
+			// 添加新的占位DIV
+			var newBlankDiv = '<div class="blankDiv" style="height: 30px;" id="noticeBlankDiv"></div>';
+			$('#newsList').after(newBlankDiv);
+			// 修改事件加载标识符，当前有其他加载事件已完成
+			newsLoading = 0;
+			// 如果列表已加载完成
+			if (1 == 2) {
+				// 设置全局标识符以表示新闻已加载完成
+				allNewsLoaded = 1;
+				// 隐藏占位DIV，延迟500ms执行
+				setTimeout("$('#noticeBlankDiv').css('display','none')",500);
+				// 显示加载提示DIV，延迟500ms执行，总共需要1000ms加载
+				setTimeout("$('#notAnymore').fadeIn(500);",500);
+			}
+		}
+		
+		window.onload = function(){
+			// 当页面加载完成后，顶部图片开始轮播
+			mui('#slider').slider({
+				// 设置轮播时间
+				interval: 5000
+			});
+			// 顶部标题和新闻预览根据图片的变化而变化
+			document.querySelector('.mui-slider').addEventListener('slide', function(event) {
+				// 第一张图片
+				if (event.detail.slideNumber == 0) {
+					$('.topNewsTitle p').text("加快时空大数据与云平台建设力度 支撑城市规划建设管理和服务质量");
+					$('.topNewsDesc p').text("近日，国家测绘地理信息局印发《关于加快推进智慧城市时空大数据与云平台建设试点工作的通知》和...");
+				}
+				// 第二张图片
+				if (event.detail.slideNumber == 1) {
+					$('.topNewsTitle p').text("国家测绘地理信息局2017年第34号公告");
+					$('.topNewsDesc p').text("为保障国务院“放管服”改革措施落实，根据《国务院办公厅关于进一步做好“放管服”改革涉及的规章...");
+				}
+				// 第三张图片
+				if (event.detail.slideNumber == 2) {
+					$('.topNewsTitle p').text("习近平新时代中国特色社会主义思想的历史地位和丰富内涵");
+					$('.topNewsDesc p').text("党的十九大将习近平新时代中国特色社会主义思想确立为我们党必须长期坚持的指导思想");
+				}
+			});
+		}
+		
+		</script>
+	</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
+		<title>服务大厅</title>
+		<!--jQuery框架-->
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--MUI框架-->
+		<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--CSS-->
+		<link rel="stylesheet" type="text/css" href="css/serviceHall.css"/>
+		<!--JS-->
+	</head>
+	
+	<body>
+		<div class="mainContent">
+			<div class="search  mui-input-row">
+				<div class="searchInput mui-input-row">
+					<img src="img/searchGray.png"/><input class="mui-input-clear" type="text" placeholder="搜索"/>
+				</div>
+			</div>
+			<div class="banner">
+				<img src="img/serviceHall.png"/>
+			</div>
+			<div class="blankDiv"></div>
+			<div class="services">
+				<div class="serviceCell">
+					<img src="img/news.png"/>
+					<p>公示公告</p>
+				</div>
+				<div class="serviceCell">
+					<img src="img/policy.png"/>
+					<p>政策法规</p>
+				</div>
+				<div class="serviceCell">
+					<img src="img/QA.png"/>
+					<p>咨询留言</p>
+				</div>
+				<div class="serviceCell">
+					<img src="img/guide.png"/>
+					<p>办事指南</p>
+				</div>
+				<div class="serviceCell">
+					<img src="img/process.png"/>
+					<p>进度查询</p>
+				</div>
+				<div class="serviceCell">
+					<img src="img/online.png"/>
+					<p>在线受理</p>
+				</div>
+				<div class="serviceCell">
+					<img src="img/summary.png"/>
+					<p>中心概述</p>
+				</div>
+				<div class="serviceCell">
+					<img src="img/upload.png"/>
+					<p>文件上传</p>
+				</div>
+				<div class="serviceCell">
+					<img src="img/industry.png"/>
+					<p>行情动态</p>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+		// 根据服务类别的数量，完善分割线布局
+		// 确定服务类别的数量
+		var serviceCount = $('.serviceCell').length;
+		// 因为1行3个服务，因此情况可以分为3种
+		if (serviceCount%3 == 0) { // 正好是3的倍数
+			// 不需要做更多的调整
+			console.log("布局完美，不需要做更多的调整");
+		}
+		
+		if (serviceCount%3 == 1) { // 多1个
+			// 去掉最后一行服务的上边框，为倒数第二行的服务添加下边框
+			console.log("最后一行只有一个服务");
+			// 获取最后一行的服务
+			var lastLineCell1 = $('.serviceCell')[$('.serviceCell').length - 1];
+			// 去掉他们的上边框
+			$(lastLineCell1).css('border-top','0');
+			// 获取倒数第二行的服务
+			var serviceCell1 = $('.serviceCell')[$('.serviceCell').length - 4];
+			var serviceCell2 = $('.serviceCell')[$('.serviceCell').length - 3];
+			var serviceCell3 = $('.serviceCell')[$('.serviceCell').length - 2];
+			// 为他们添加下边框
+			$(serviceCell1).css('border-bottom','1px solid #EBEBEB');
+			$(serviceCell2).css('border-bottom','1px solid #EBEBEB');
+			$(serviceCell3).css('border-bottom','1px solid #EBEBEB');
+		}
+		
+		if (serviceCount%3 == 2) { // 多2个
+			// 去掉最后一行服务的上边框，为倒数第二行的服务添加下边框
+			console.log("最后一行只有两个服务");
+			// 获取最后一行的服务
+			var lastLineCell1 = $('.serviceCell')[$('.serviceCell').length - 1];
+			var lastLineCell2 = $('.serviceCell')[$('.serviceCell').length - 2];
+			// 去掉他们的上边框
+			$(lastLineCell1).css('border-top','0');
+			$(lastLineCell2).css('border-top','0');
+			// 获取倒数第二行的服务
+			var serviceCell1 = $('.serviceCell')[$('.serviceCell').length - 5];
+			var serviceCell2 = $('.serviceCell')[$('.serviceCell').length - 4];
+			var serviceCell3 = $('.serviceCell')[$('.serviceCell').length - 3];
+			// 为他们添加下边框
+			$(serviceCell1).css('border-bottom','1px solid #EBEBEB');
+			$(serviceCell2).css('border-bottom','1px solid #EBEBEB');
+			$(serviceCell3).css('border-bottom','1px solid #EBEBEB');
+		}
+		</script>
+	</body>
+</html>

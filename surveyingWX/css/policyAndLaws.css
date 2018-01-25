@@ -1,0 +1,112 @@
+p{
+	margin-bottom: 0;
+}
+
+.mainContent{
+	
+}
+
+.mainContent .backToHome{
+	width: 100%;
+	height: 40px;
+	background-color: #2577FF;
+}
+
+.mainContent .backToHome p{
+	line-height: 40px;
+	font-size: 16px;
+	color: #FFFFFF;
+	text-align: center;
+}
+
+.mainContent .backToHome img{
+	width: 20px;
+	vertical-align: middle;
+	margin-top: -4px;
+	margin-right: 5px;
+}
+
+.mainContent .topImg{
+	margin-top: 10px;
+}
+
+.mainContent .topImg img{
+	width: 100%;
+	display: block;
+}
+
+.mainContent .policyList{
+	margin-top: 10px;
+	width: 100%;
+}
+
+.mainContent .policyList .policyCell{
+	width: 100%;
+	background-color: #FFFFFF;
+	margin-bottom: 10px;
+	position: relative;
+}
+
+.mainContent .policyList .policyCell .policyTitle{
+	line-height: 25px;
+	font-size: 16px;
+	color: #333333;
+	font-weight: bold;
+	padding-top: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.mainContent .policyList .policyCell .policyDesc{
+	line-height: 20px;
+	font-size: 14px;
+	color: #666666;
+	padding: 10px 15px;
+}
+
+.mainContent .policyList .policyCell img{
+	width: 18px;
+	position: absolute;
+	top: 0;
+	right: 20px;
+}
+
+.mainContent .notice{
+	height: 30px;
+	display: none;
+}
+
+.mainContent .notice p{
+	line-height: 30px;
+	font-size: 14px;
+	color: #666666;
+	text-align: center;
+	margin-bottom: 0;
+}
+
+.mainContent .notice img{
+	width: 20px;
+	height: 20px;
+	vertical-align: middle;
+	margin-top: -4px;
+	margin-right: 5px;
+}
+
+.mainContent .searchIcon{
+	background-color: #2477FF;
+	position: fixed;
+	width: 32px;
+	height: 32px;
+	bottom: 20px;
+	right: 20px;
+	border-radius: 16px;
+	-moz-border-radius: 16px;
+	-webkit-border-radius: 16px;
+}
+
+.mainContent .searchIcon img{
+	width: 20px;
+	height: 20px;
+	margin-top: 6px;
+	margin-left: 6px;
+}

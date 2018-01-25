@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
+		<title>搜索</title>
+		<!--jQuery框架-->
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--MUI框架-->
+		<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--CSS-->
+		<link rel="stylesheet" type="text/css" href="css/search.css"/>
+		<!--JS-->
+	</head>
+	
+	<body>
+		<div class="mainContent">
+			<div class="search">
+				<div class="searchInput mui-input-row">
+					<img src="img/searchGray.png"/><input class="mui-input-clear" type="text" placeholder="搜索"/>
+				</div>
+				<div class="searchCancel">
+					<p>取消</p>
+				</div>
+			</div>
+			<div class="trending">
+				<div class="trendingTitle">
+					<p><img src="img/trending.png"/>热搜</p>
+				</div>
+				<div class="trendingList">
+					<div class="trendingCell">
+						<p>学习十九大精神</p>
+					</div>
+					
+					<div class="trendingCell">
+						<p>学习总书记讲话</p>
+					</div>
+					<div class="trendingCell">
+						<p>收费标准</p>
+					</div>
+					<div class="trendingCell">
+						<p>两学一做</p>
+					</div>
+					<div class="trendingCell">
+						<p>办事指南</p>
+					</div>
+					<div class="trendingCell">
+						<p>测绘中心办事指南</p>
+					</div>
+					<div class="trendingCell">
+						<p>测绘中心收费标准</p>
+					</div>
+				</div>
+			</div>
+			<div class="history">
+				<div class="historyTitle">
+					<p><img src="img/history.png"/>历史搜索</p>
+				</div>
+				<div class="historyList">
+					<ul class="mui-table-view">
+					    <li class="mui-table-view-cell historyCell">学习十九大精神<img src="img/delHistory.png"/></li>
+					    <li class="mui-table-view-cell historyCell">测绘中心收费标准<img src="img/delHistory.png"/></li>
+					    <li class="mui-table-view-cell historyCell">两学一做<img src="img/delHistory.png"/></li>
+					    <li class="mui-table-view-cell historyCell">测绘中心收费标准<img src="img/delHistory.png"/></li>
+					    <li class="mui-table-view-cell historyCell">两学一做<img src="img/delHistory.png"/></li>
+					</ul>
+					<p class="clearHistory">清空历史记录</p>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+		// 因为MUI input清楚控件出现bug，现写一个input清除控件，后期可能修复
+		// input获得焦点，代表即将开始输入
+//		$('#searchInput').focus(function(){
+//			// 清除图标显示
+//			console.log('输入框获取焦点，清除图标显示');
+//			$('#clearInput').css('display','inline');
+//		});
+//		
+//		// input移除焦点，代表输入完毕
+//		$('#searchInput').blur(function(){
+//			// 清除图标隐藏
+//			console.log('输入框获取焦点，清除图标显示');
+//			// 为避免清除图标被点击后被立马隐藏导致无法实际点击到图标，延迟10ms触发
+//			setTimeout("$('#clearInput').css('display','none')",10);
+//		});
+//		
+//		// 点击清除图标，清除input输入框里的内容
+//		$('#clearInput').click(function(){
+//			// 清除内容
+//			console.log('点击清除图标，清除input标签的输入内容');
+//			$('#searchInput').val('');
+//			// 并再次将焦点
+//		});
+		</script>
+	</body>
+</html>
