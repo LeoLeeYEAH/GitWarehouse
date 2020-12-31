@@ -1,0 +1,24 @@
+{
+	"manifest_version": 2,
+	"name": "TmallMoutai",
+	"version": "0.0.1",
+	"description": "天猫茅台抢购",
+	"icons":
+	{
+		"48": "img/icon.png",
+		"64": "img/icon.png",
+		"128": "img/icon.png"
+	},
+	"browser_action": 
+	{
+		"default_icon": "img/icon.png",
+		"default_popup": "popup.html"
+	},
+	"content_scripts": 
+	[
+		{
+			"matches": ["<all_urls>"],
+			"js": ["js/content-script.js", "js/jquery-1.8.3.js"]
+		}
+	]
+}
