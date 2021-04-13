@@ -39,24 +39,26 @@ class HBGA:
         self.g_best_fit = None
         # 记录每一代的最优适应度值
         self.fit_record = np.zeros(max_iter + 1)
+        # 最后的收敛结果
+        self.final_result = None
 
     # 种群初始化
     def initial(self):
+        # 随机生成每个个体的初始位置
         for i in range(self.size):
             for j in range(self.dim):
-                # 随机生成每个个体的初始位置
                 self.pos_time_fit[i, j] = random.uniform(self.r_min, self.r_max)
             # 记录个体的初始适应度值
             self.pos_time_fit[i, -1] = ea_common.func_eval(self.pos_time_fit[i, :self.dim], self.func_no)
         # 根据适应度值对种群进行排序
         self.pos_time_fit = self.pos_time_fit[np.argsort(self.pos_time_fit[:, -1])]
         # 记录全局初始最优位置和适应度
-        self.g_best_pos = self.pos_time_fit[0, :self.dim]
+        self.g_best_pos = self.pos_time_fit[0, :self.dim].copy()    # deep copy
         self.g_best_fit = self.pos_time_fit[0, -1]
         self.fit_record[0] = self.g_best_fit
-        print('初始最优位置和适应度值为：')
-        print(self.g_best_pos)
-        print(self.g_best_fit)
+        # print('初始最优位置和适应度值为：')
+        # print(self.g_best_pos)
+        # print(self.g_best_fit)
 
     # 迭代寻优
     def optimal(self):
@@ -78,10 +80,12 @@ class HBGA:
                 # 开始杂交过程
                 for i in range(self.dim):
                     # 生成随机数r1 r2
-                    r1 = random.uniform(-1, 1)
+                    r1 = random.uniform(-1, 1)    # 原始
+                    # r1 = random.uniform(0, 1)    # 改进
                     r2 = random.uniform(-1, 1)
                     # 根据所定义的公式进行杂交
-                    new_sterile[i] = (r1 * selected_maintainer[i] + r2 * selected_sterile[i]) / (r1 + r2)
+                    new_sterile[i] = (r1 * selected_maintainer[i] + r2 * selected_sterile[i]) / (r1 + r2)    # 原始
+                    # new_sterile[i] = (r1 * selected_maintainer[i] + (1 - r1) * selected_sterile[i])   # 改进1
                     # 判断个体位置是否会越界
                     new_sterile[i] = ea_common.bound_check(new_sterile[i], self.r_max, self.r_min)
                 # 计算新个体的适应度值
@@ -90,8 +94,8 @@ class HBGA:
                 if new_sterile[-1] < self.pos_time_fit[index, -1]:
                     self.pos_time_fit[index] = new_sterile
             # 杂交结束后更新全局最优位置和最优适应度值
-            best_index = int(np.where(self.pos_time_fit == np.min(self.pos_time_fit[:, -1]))[0])
-            self.g_best_pos = self.pos_time_fit[best_index, :self.dim]
+            best_index = np.where(self.pos_time_fit == np.min(self.pos_time_fit[:, -1]))[0][0]
+            self.g_best_pos = self.pos_time_fit[best_index, :self.dim].copy()    # deep copy
             self.g_best_fit = self.pos_time_fit[best_index, -1]
 
             # 恢复系自交或重置
@@ -135,23 +139,24 @@ class HBGA:
                     # 将该个体自交次数置0
                     self.pos_time_fit[index, self.dim] = 0
                 # 针对当前个体的操作完成后，更新全局最优位置和最优适应度值
-                best_index = int(np.where(self.pos_time_fit == np.min(self.pos_time_fit[:, -1]))[0])
-                self.g_best_pos = self.pos_time_fit[best_index, :self.dim]
+                best_index = np.where(self.pos_time_fit == np.min(self.pos_time_fit[:, -1]))[0][0]
+                self.g_best_pos = self.pos_time_fit[best_index, :self.dim].copy()    # deep copy
                 self.g_best_fit = self.pos_time_fit[best_index, -1]
 
             # 当前迭代完成，根据适应度值对种群重新排序
             self.pos_time_fit = self.pos_time_fit[np.argsort(self.pos_time_fit[:, -1])]
             # 更新全局最优位置和最优适应度值
-            self.g_best_pos = self.pos_time_fit[0, :self.dim]
-            self.g_best_fit = self.pos_time_fit[0, -1]
+            # self.g_best_pos = self.pos_time_fit[0, :self.dim].copy()    # deep copy
+            # self.g_best_fit = self.pos_time_fit[0, -1]
             # 本次迭代结束，判断是否提前收敛
             if self.g_best_fit < 1e-8:
                 # 若最优值小于1e-8则认为函数已经收敛
+                # print('本次迭代提前收敛于：', iter_count)
                 break
             # 输出全局最优位置和最优适应度值
-            print('当前迭代次数：', iter_count + 1)
-            print(self.g_best_pos)
-            print(self.g_best_fit)
+            # print('当前迭代次数：', iter_count + 1)
+            # print(self.g_best_pos)
+            # print(self.g_best_fit)
             # 记录本次迭代后的最优适应度值
             self.fit_record[iter_count + 1] = self.g_best_fit
 
@@ -174,18 +179,24 @@ class HBGA:
         plt.plot(np.arange(self.max_iter + 1), [v for v in fit_record_log])
         plt.show()
 
+    # 输出收敛结果等各项信息
+    def result(self):
+        self.final_result = self.fit_record[-1]
+        return self.final_result
 
-# 设置HBGA的各项参数
-hbga = HBGA(size=60, dim=10, max_self=60, r_max=100, r_min=-100, max_iter=2500, func_no=1)
 
-for i in range(1):
-    # 初始化HBGA
-    hbga.initial()
-    # 开始迭代
-    hbga.optimal()
-    # 收敛曲线
-    hbga.curve()
-
+# # 设置HBGA的各项参数
+# hbga = HBGA(size=60, dim=10, max_self=60, r_max=100, r_min=-100, max_iter=2500, func_no=1)
+#
+# for i in range(1):
+#     # 初始化HBGAs
+#     hbga.initial()
+#     # 开始迭代
+#     hbga.optimal()
+#     # 收敛曲线
+#     # hbga.curve()
+#     # 收敛结果
+#     hbga.result()
 
 
 
