@@ -80,12 +80,12 @@ class HBGA:
                 # 开始杂交过程
                 for i in range(self.dim):
                     # 生成随机数r1 r2
-                    r1 = random.uniform(-1, 1)    # 原始
-                    # r1 = random.uniform(0, 1)    # 改进
-                    r2 = random.uniform(-1, 1)
+                    # r1 = random.uniform(-1, 1)    # 原始
+                    r1 = random.uniform(0, 1)    # 改进
+                    # r2 = random.uniform(-1, 1)
                     # 根据所定义的公式进行杂交
-                    new_sterile[i] = (r1 * selected_maintainer[i] + r2 * selected_sterile[i]) / (r1 + r2)    # 原始
-                    # new_sterile[i] = (r1 * selected_maintainer[i] + (1 - r1) * selected_sterile[i])   # 改进1
+                    # new_sterile[i] = (r1 * selected_maintainer[i] + r2 * selected_sterile[i]) / (r1 + r2)    # 原始
+                    new_sterile[i] = (r1 * selected_maintainer[i] + (1 - r1) * selected_sterile[i])   # 改进1
                     # 判断个体位置是否会越界
                     new_sterile[i] = ea_common.bound_check(new_sterile[i], self.r_max, self.r_min)
                 # 计算新个体的适应度值
@@ -151,7 +151,7 @@ class HBGA:
             # 本次迭代结束，判断是否提前收敛
             if self.g_best_fit < 1e-8:
                 # 若最优值小于1e-8则认为函数已经收敛
-                # print('本次迭代提前收敛于：', iter_count)
+                print('--------本次迭代提前收敛于：', iter_count)
                 break
             # 输出全局最优位置和最优适应度值
             # print('当前迭代次数：', iter_count + 1)

@@ -103,7 +103,7 @@ class PSO:
             # 本次迭代结束，判断是否提前收敛
             if self.g_best_fit < 1e-8:
                 # 若最优值小于1e-8则认为函数已经收敛
-                print('本次迭代提前收敛于：', iter_count)
+                print('--------本次迭代提前收敛于：', iter_count)
                 break
             # 输出本次迭代的全局最优位置和适应度值
             # print('当前迭代次数：', iter_count + 1)
