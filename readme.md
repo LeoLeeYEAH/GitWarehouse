@@ -6,5 +6,6 @@
     - Python
         - practice
         - PSO-XGBOOST-NSL-KDD
-		- HBGA
+		- HBGA-benchmark
+		- HBGA-XGBOOST
 - TmallMoutai		
