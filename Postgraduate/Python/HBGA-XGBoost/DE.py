@@ -115,7 +115,7 @@ class DEForXGBoost:
             self.g_best_fit = self.fit[max_index]
             # 输出本次迭代的全局最优位置和适应度值
             print('当前迭代次数：', iter_count + 1)
-            print(self.fit)
+            print(self.g_best_pos)
             print(self.g_best_fit)
             # 记录本次迭代的最优位置和适应度值
             self.pos_record[iter_count + 1] = self.g_best_pos

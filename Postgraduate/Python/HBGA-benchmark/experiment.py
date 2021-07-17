@@ -7,14 +7,18 @@ from GA import GA
 from HBGA import HBGA
 from PSO import PSO
 from DE import DE
+from WOA import WOA
 
 
+# benchmark测试参数设置
 # 待测试算法数量
-optimizers = ['GA', 'DE']
+optimizers = ['WOA']
 # benchmark函数数量
 benchmark = 5
 # 每个算法运行次数
-times = 10
+times = 50
+
+
 # 创建numpy数组储存运行结果
 # results = np.zeros((benchmark * times, len(optimizers)))
 # 为了方便审阅数据建立专用索引
@@ -42,7 +46,7 @@ for opt in optimizers:
             print('----当前benchmark函数为：', func_no+1)
             # 设置各项参数
             pso = PSO(w_max=0.9, w_min=0.4, c1=2, c2=2, pos_max=100, pos_min=-100, vel_max=1, vel_min=-1,
-                      max_iter=1000, ps_size=100, dim=10, func_no=func_no+1)
+                      max_iter=500, ps_size=100, dim=10, func_no=func_no+1)
             # 多次运行
             for time in range(times):
                 # 初始化
@@ -50,11 +54,11 @@ for opt in optimizers:
                 # 开始迭代
                 pso.optimal()
                 # 收敛结果
-                print('--------第', time+1, '次收敛结果为：', pso.result())
+                print('--------第', time+1, '次收敛结果为：', pso.final_result)
                 # 运行结果的索引
                 result_index = func_no * times + time
                 # 储存运行结果
-                data['PSO'].iloc[result_index] = pso.result()
+                data['PSO'].iloc[result_index] = pso.final_result
                 # 转存到CSV文件中
                 data.to_csv('results.csv')
 
@@ -64,7 +68,7 @@ for opt in optimizers:
             # 输出当前的benchmark函数
             print('----当前benchmark函数为：', func_no+1)
             # 设置各项参数
-            hbga = HBGA(size=60, dim=10, max_self=60, r_max=100, r_min=-100, max_iter=2500, func_no=func_no+1)
+            hbga = HBGA(size=120, dim=10, max_self=50, r_max=100, r_min=-100, max_iter=1000, func_no=func_no+1)
             # 多次运行
             for time in range(times):
                 # 初始化
@@ -72,11 +76,11 @@ for opt in optimizers:
                 # 开始迭代
                 hbga.optimal()
                 # 收敛结果
-                print('--------第', time+1, '次收敛结果为：', hbga.result())
+                print('--------第', time+1, '次收敛结果为：', hbga.final_result)
                 # 运行结果的索引
                 result_index = func_no * times + time
                 # 储存运行结果
-                data['HBGA'].iloc[result_index] = hbga.result()
+                data['HBGA'].iloc[result_index] = hbga.final_result
                 # 转存到CSV文件中
                 data.to_csv('results.csv')
 
@@ -86,7 +90,7 @@ for opt in optimizers:
             # 输出当前的benchmark函数
             print('----当前benchmark函数为：', func_no+1)
             # 设置各项参数
-            ga = GA(size=100, dim=10, pos_max=100, pos_min=-100, max_iter=500, func_no=func_no+1,
+            ga = GA(size=100, dim=10, pos_max=100, pos_min=-100, max_iter=1000, func_no=func_no+1,
                     select_type='rws', cross_type='spc', cross_rate=0.8, mutation_type='rm', mutation_rate=0.05, keep_elite=10)
             # 多次运行
             for time in range(times):
@@ -95,11 +99,11 @@ for opt in optimizers:
                 # 开始迭代
                 ga.optimal()
                 # 收敛结果
-                print('--------第', time+1, '次收敛结果为：', ga.result())
+                print('--------第', time+1, '次收敛结果为：', ga.final_result)
                 # 运行结果的索引
                 result_index = func_no * times + time
                 # 储存运行结果
-                data['GA'].iloc[result_index] = ga.result()
+                data['GA'].iloc[result_index] = ga.final_result
                 # 转存到CSV文件中
                 data.to_csv('results.csv')
 
@@ -109,7 +113,7 @@ for opt in optimizers:
             # 输出当前的benchmark函数
             print('----当前benchmark函数为：', func_no + 1)
             # 设置各项参数
-            de = DE(size=100, dim=10, pos_max=100, pos_min=-100, max_iter=500, func_no=func_no+1, F=1, CR=0.5)
+            de = DE(size=100, dim=10, pos_max=100, pos_min=-100, max_iter=1000, func_no=func_no+1, F=1, CR=0.5)
             # 多次运行
             for time in range(times):
                 # 初始化
@@ -117,11 +121,33 @@ for opt in optimizers:
                 # 开始迭代
                 de.optimal()
                 # 收敛结果
-                print('--------第', time + 1, '次收敛结果为：', de.result())
+                print('--------第', time + 1, '次收敛结果为：', de.final_result)
                 # 运行结果的索引
                 result_index = func_no * times + time
                 # 储存运行结果
-                data['DE'].iloc[result_index] = de.result()
+                data['DE'].iloc[result_index] = de.final_result
+                # 转存到CSV文件中
+                data.to_csv('results.csv')
+
+    if opt == 'WOA':
+        # WOA
+        for func_no in range(benchmark):
+            # 输出当前的benchmark函数
+            print('----当前benchmark函数为：', func_no + 1)
+            # 设置各项参数
+            woa = WOA(size=100, dim=10, pos_max=100, pos_min=-100, max_iter=500, func_no=func_no+1, a=2, b=1)
+            # 多次运行
+            for time in range(times):
+                # 初始化
+                woa.initial()
+                # 开始迭代
+                woa.optimal()
+                # 收敛结果
+                print('--------第', time + 1, '次收敛结果为：', woa.final_result)
+                # 运行结果的索引
+                result_index = func_no * times + time
+                # 储存运行结果
+                data['WOA'].iloc[result_index] = woa.final_result
                 # 转存到CSV文件中
                 data.to_csv('results.csv')
 

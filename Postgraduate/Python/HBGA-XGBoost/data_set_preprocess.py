@@ -1,6 +1,9 @@
 import numpy as np
 import pandas as pd
 
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
+
 
 # 编程期间辅助设置
 # 显示所有列

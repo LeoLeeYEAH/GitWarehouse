@@ -1,4 +1,7 @@
+import numpy as np
+import math
 import matlab_fe
+import matplotlib.pyplot as plt
 
 
 # Function Evaluation 适应度值评估
@@ -21,6 +24,24 @@ def bound_check(item, upper_bound, lower_bound):
     return item
 
 
+# 绘制收敛曲线
+def curve(max_iter, fit_record):
+    # 利用math.log转换适应度值
+    fit_record_log = np.zeros(max_iter + 1)
+    for i in range(max_iter + 1):
+        # 判断是否提前收敛
+        if fit_record[i] > 0:
+            # 若未提前收敛
+            fit_record_log[i] = math.log(fit_record[i])
+        else:
+            # 若已提前收敛
+            fit_record_log[fit_record_log == 0] = math.log(1e-8)
+    # 绘制收敛曲线
+    plt.title("Convergence Curve")
+    plt.xlabel("Iteration")
+    plt.ylabel("Fitness")
+    plt.plot(np.arange(max_iter + 1), [v for v in fit_record_log])
+    plt.show()
 
 
 

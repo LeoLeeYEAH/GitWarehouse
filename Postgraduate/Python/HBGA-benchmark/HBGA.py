@@ -163,43 +163,12 @@ class HBGA:
             # 记录本次迭代后的最优适应度值
             self.fit_record[iter_count + 1] = self.g_best_fit
 
-    # 收敛曲线
-    def curve(self):
-        # 利用math.log转换适应度值
-        fit_record_log = np.zeros(self.max_iter + 1)
-        for i in range(self.max_iter + 1):
-            # 判断是否提前收敛
-            if self.fit_record[i] > 0:
-                # 若未提前收敛
-                fit_record_log[i] = math.log(self.fit_record[i])
-            else:
-                # 若已提前收敛
-                fit_record_log[fit_record_log == 0] = math.log(1e-8)
-        # 绘制收敛曲线
-        plt.title("Convergence Curve")
-        plt.xlabel("Iteration")
-        plt.ylabel("Fitness")
-        plt.plot(np.arange(self.max_iter + 1), [v for v in fit_record_log])
-        plt.show()
-
-    # 输出收敛结果等各项信息
-    def result(self):
+        # 迭代寻优结束，记录最终结果
         self.final_result = self.fit_record[-1]
-        return self.final_result
 
 
-# # 设置HBGA的各项参数
-hbga = HBGA(size=30, dim=10, max_self=60, r_max=100, r_min=-100, max_iter=2500, func_no=1)
-
-for i in range(1):
-    # 初始化HBGAs
-    hbga.initial()
-    # 开始迭代
-    # hbga.optimal()
-    # 收敛曲线
-    # hbga.curve()
-    # 收敛结果
-    # hbga.result()
+# 设置HBGA的各项参数
+# hbga = HBGA(size=30, dim=10, max_self=60, r_max=100, r_min=-100, max_iter=2500, func_no=1)
 
 
 

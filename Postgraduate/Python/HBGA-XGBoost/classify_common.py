@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 
 # 随机生成XGBoost的每个参数
 def xgb_para_init(pos):
+    # 若参数只有6个
     # learning_rate
     pos[0] = random.uniform(0, 1)
     # gamma
@@ -21,11 +22,28 @@ def xgb_para_init(pos):
     # colsample_bytree
     pos[5] = random.uniform(0, 1)
 
+    # 若参数大于6个
+    if len(pos) > 6:
+        # colsample_bylevel
+        pos[6] = random.uniform(0, 1)
+        # colsample_bynode
+        pos[7] = random.uniform(0, 1)
+        # max_delta_step
+        pos[8] = random.uniform(0, 10)
+
+    # 若参数大于9个
+    if len(pos) > 9:
+        # reg_lambda
+        pos[9] = random.uniform(0, 1)
+        # reg_alpha
+        pos[10] = random.uniform(0, 1)
+
     return pos
 
 
 # XGBoost参数取值范围越界检查
 def xgb_bound_check(pos):
+    # 若参数只有6个
     # learning_rate
     if pos[0] < 0:
         pos[0] = 0
@@ -54,6 +72,31 @@ def xgb_bound_check(pos):
     if pos[5] > 1:
         pos[5] = 1
 
+    # 若参数大于6个
+    if len(pos) > 6:
+        # colsample_bylevel
+        if pos[6] <= 0:
+            pos[6] = 0.01
+        if pos[6] > 1:
+            pos[6] = 1
+        # colsample_bynode
+        if pos[7] <= 0:
+            pos[7] = 0.01
+        if pos[7] > 1:
+            pos[7] = 1
+        # max_delta_step
+        if pos[8] < 0:
+            pos[8] = 0
+
+    # 若参数大于9个
+    if len(pos) > 9:
+        # reg_lambda
+        if pos[9] < 0:
+            pos[9] = 0
+        # reg_alpha
+        if pos[10] < 0:
+            pos[10] = 0
+
     return pos
 
 
@@ -81,8 +124,16 @@ def to_csv(fit_record, pos_record, algo_name):
     pos = pd.DataFrame(pos_record)
     # 拼接适应度值和参数信息
     data = pd.concat([fit, pos], axis=1)
+    # 根据参数数量设置表头
+    if pos_record.shape[1] == 6:
+        columns = ['fitness', 'learning_rate', 'gamma', 'max_depth', 'min_child_weight', 'subsample', 'colsample_bytree']
+    if pos_record.shape[1] == 9:
+        columns = ['fitness', 'learning_rate', 'gamma', 'max_depth', 'min_child_weight', 'subsample', 'colsample_bytree',
+                   'colsample_bylevel', 'colsample_bynode', 'max_delta_step']
+    if pos_record.shape[1] == 11:
+        columns = ['fitness', 'learning_rate', 'gamma', 'max_depth', 'min_child_weight', 'subsample', 'colsample_bytree',
+                   'colsample_bylevel', 'colsample_bynode', 'max_delta_step', 'reg_lambda', 'reg_alpha']
     # 转存到CSV文件
-    columns = ['fitness', 'learning_rate', 'gamma', 'max_depth', 'min_child_weight', 'subsample', 'colsample_bytree']
     data.to_csv(file_name, header=columns)
 
 

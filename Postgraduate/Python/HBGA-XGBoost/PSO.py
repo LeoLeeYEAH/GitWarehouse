@@ -66,7 +66,9 @@ class PSOForXGBoost:
         # 开始迭代
         for iter_count in range(self.max_iter):
             # 计算当前惯性权重w的值
+            # 线性递减
             w = (self.w_max + (self.max_iter - iter_count) * (self.w_max - self.w_min)) / self.max_iter
+            # 随机选取（参数优化效果更好）
             # w = random.uniform(self.w_min, self.w_max)
 
             # 更新粒子位置和速度

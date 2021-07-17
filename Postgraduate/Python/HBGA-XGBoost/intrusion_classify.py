@@ -23,12 +23,27 @@ pd.set_option('display.max_columns', None)
 # XGBoost
 def xgb_classify(xgb_para, classify_dataset, attack_types):
     # 获取XGBoost参数
+    # 基本的6个参数
     learning_rate = xgb_para[0]
     gamma = xgb_para[1]
     max_depth = int(xgb_para[2])
     min_child_weight = xgb_para[3]
     subsample = xgb_para[4]
     colsample_bytree = xgb_para[5]
+    # 默认的额外参数
+    colsample_bylevel = 1
+    colsample_bynode = 1
+    max_delta_step = 0
+    reg_lambda = 1
+    reg_alpha = 0
+    # 优化的额外参数
+    if len(xgb_para) > 6:
+        colsample_bylevel = xgb_para[6]
+        colsample_bynode = xgb_para[7]
+        max_delta_step = xgb_para[8]
+    if len(xgb_para) > 9:
+        reg_lambda = xgb_para[9]
+        reg_alpha = xgb_para[10]
     # 设置XGBoost参数
     xgb = XGBClassifier(tree_method='gpu_hist',
                         learning_rate=learning_rate,
@@ -36,7 +51,12 @@ def xgb_classify(xgb_para, classify_dataset, attack_types):
                         max_depth=max_depth,
                         min_child_weight=min_child_weight,
                         subsample=subsample,
-                        colsample_bytree=colsample_bytree)
+                        colsample_bytree=colsample_bytree,
+                        colsample_bylevel=colsample_bylevel,
+                        colsample_bynode=colsample_bynode,
+                        max_delta_step=max_delta_step,
+                        reg_lambda=reg_lambda,
+                        reg_alpha=reg_alpha)
 
     # 获取要进行分类的数据集
     # NSL-KDD

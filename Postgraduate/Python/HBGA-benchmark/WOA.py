@@ -1,23 +1,25 @@
 import numpy as np
-import pandas as pd
+import ea_common
 import random
-import time
-import math
 
-import intrusion_classify
-import classify_common
+import math
 
 
 # 创建WOA类
-class WOAForXGBoost:
+class WOA:
     # 构造函数
-    def __init__(self, size, dim, max_iter, a, b):
+    def __init__(self, size, dim, pos_max, pos_min, max_iter, func_no, a, b):
         # 种群大小
         self.size = size
         # 维度
         self.dim = dim
+        # 搜索域上限
+        self.pos_max = pos_max
+        self.pos_min = pos_min
         # 迭代次数
         self.max_iter = max_iter
+        # benchmark函数编号
+        self.func_no = func_no
         # 线性递减参数a
         self.a = a
         # 螺旋更新参数b
@@ -30,32 +32,30 @@ class WOAForXGBoost:
         self.g_best_pos = None
         # 全局最优适应度值
         self.g_best_fit = None
-        # 记录每一代的最优位置
-        self.pos_record = np.zeros((max_iter + 1, dim))
         # 记录每一代的最优适应度值
         self.fit_record = np.zeros(max_iter + 1)
         # 最后的收敛结果
         self.final_result = None
 
     # 种群初始化
-    def initial(self, classify_dataset, attack_types):
+    def initial(self):
         # 随机生成每个个体的初始位置
         for i in range(self.size):
-            self.pos[i] = classify_common.xgb_para_init(self.pos[i])
+            for j in range(self.dim):
+                self.pos[i, j] = random.uniform(self.pos_min, self.pos_max)
             # 记录个体的初始适应度值
-            self.fit[i] = intrusion_classify.xgb_classify(self.pos[i], classify_dataset, attack_types)
+            self.fit[i] = ea_common.func_eval(self.pos[i], self.func_no)
         # 记录初始全局最优下标、位置和适应度值
-        max_index = np.argsort(-self.fit)[0]
-        self.g_best_pos = self.pos[max_index].copy()    # deep copy
-        self.g_best_fit = self.fit[max_index]
-        self.pos_record[0] = self.g_best_pos.copy()  # deep copy
+        min_index = np.argsort(self.fit)[0]
+        self.g_best_pos = self.pos[min_index].copy()    # deep copy
+        self.g_best_fit = self.fit[min_index]
         self.fit_record[0] = self.g_best_fit
-        print('初始最优位置和适应度值为：')
-        print(self.g_best_pos)
-        print(self.g_best_fit)
+        # print('初始最优位置和适应度值为：')
+        # print(self.g_best_pos)
+        # print(self.g_best_fit)
 
     # 迭代寻优
-    def optimal(self, classify_dataset, attack_types):
+    def optimal(self):
         # 开始迭代
         for iter_count in range(self.max_iter):
             # 确定线性递减参数a1 a2
@@ -103,27 +103,40 @@ class WOAForXGBoost:
                         # 更新后的位置
                         self.pos[i, j] = D * np.exp(self.b * l) * np.cos(2 * np.pi * l) + self.g_best_pos[j]
 
-                # 判断新生成的个体位置是否越界
-                self.pos[i] = classify_common.xgb_bound_check(self.pos[i])
+                # 判断新生成的位置是否越界
+                for j in range(self.dim):
+                    self.pos[i, j] = ea_common.bound_check(self.pos[i, j], self.pos_max, self.pos_min)
 
                 # 计算当前个体的适应度值
-                curr_fit = intrusion_classify.xgb_classify(self.pos[i], classify_dataset, attack_types)
+                curr_fit = ea_common.func_eval(self.pos[i], self.func_no)
 
                 # 如果当前个体的适应度值优于全局最优适应度值
-                if curr_fit > self.g_best_fit:
+                if curr_fit < self.g_best_fit:
                     # 替换全局最优位置和最优适应度值
                     self.g_best_pos = self.pos[i].copy()    # deep copy
                     self.g_best_fit = curr_fit
 
             # 本次迭代结束
+            # 本次迭代结束，判断是否提前收敛
+            if self.g_best_fit < 1e-8:
+                # 若最优值小于1e-8则认为函数已经收敛
+                print('--------本次迭代提前收敛于：', iter_count)
+                break
             # 输出本次迭代的全局最优位置和适应度值
-            print('当前迭代次数：', iter_count + 1)
-            print(self.g_best_pos)
-            print(self.g_best_fit)
-            # 记录本次迭代的最优位置和适应度值
-            self.pos_record[iter_count + 1] = self.g_best_pos.copy()  # deep copy
+            # print('当前迭代次数：', iter_count + 1)
+            # print(self.g_best_pos)
+            # print(self.g_best_fit)
+            # 记录本次迭代的最优适应度值
             self.fit_record[iter_count + 1] = self.g_best_fit
 
+        # 迭代寻优结束，记录最终结果
+        self.final_result = self.fit_record[-1]
+
+
+# woa = WOA(size=100, dim=10, pos_max=100, pos_min=-100, max_iter=500, func_no=1, a=2, b=1)
+# woa.initial()
+# woa.optimal()
+# ea_common.curve(woa.max_iter, woa.fit_record)
 
 
 

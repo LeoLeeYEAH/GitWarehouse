@@ -7,5 +7,5 @@
         - practice
         - PSO-XGBOOST-NSL-KDD
 		- HBGA-benchmark
-		- HBGA-XGBOOST
-- TmallMoutai		
+		- HBGA-XGBoost
+- TmallMoutai
